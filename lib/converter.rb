@@ -133,7 +133,7 @@ class Converter
 
     return 0 if from_conversion.nil? || to_conversion.nil?
 
-    (value.to_f * from_conversion[to_unit]).round(6)
+    (value.to_f * from_conversion[to_unit.to_s]).round(6)
   end
 
   def convert_time(value, from_unit, to_unit)
@@ -160,7 +160,7 @@ class Converter
 
     return 0 if from_conversion.nil? || to_conversion.nil?
 
-    (value.to_f * from_conversion[to_unit]).round(6)
+    value.to_f * from_conversion[to_unit] / to_conversion[from_unit]
   end
 
   def convert_volume_nonliquid(value, from_unit, to_unit)
