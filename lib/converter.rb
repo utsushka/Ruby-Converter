@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class Converter
   LENGTH_CONVERSIONS = {
     'mm' => { 'mm' => 1, 'cm' => 0.1, 'm' => 0.001, 'km' => 0.000001, 'in' => 0.0393701, 'ft' => 0.00328084,
@@ -47,6 +46,31 @@ class Converter
     'cup' => { 'tsp' => 48, 'tbsp' => 16, 'cup' => 1 }
   }.freeze
 
+  TEMPERATURE_CONVERSIONS = {
+    'C' => { 'C' => 1, 'F' => 33.8, 'K' => 274.15 },
+    'F' => { 'C' => -17.2222, 'F' => 1, 'K' => 255.928 },
+    'K' => { 'C' => -272.15, 'F' => -457.87, 'K' => 1 }
+  }.freeze
+
+  TIME_CONVERSIONS = {
+    's' => { 's' => 1, 'min' => 0.0166667, 'hr' => 0.000277778, 'day' => 0.0000115741 },
+    'min' => { 's' => 60, 'min' => 1, 'hr' => 0.0166667, 'day' => 0.000694444 },
+    'hr' => { 's' => 3600, 'min' => 60, 'hr' => 1, 'day' => 0.0416667 },
+    'day' => { 's' => 86_400, 'min' => 1440, 'hr' => 24, 'day' => 1 }
+  }.freeze
+
+  SPEED_CONVERSIONS = {
+    'km/h' => { 'km/h' => 1, 'm/s' => 0.277778, 'mph' => 0.621371 },
+    'm/s' => { 'km/h' => 3.6, 'm/s' => 1, 'mph' => 2.23694 },
+    'mph' => { 'km/h' => 1.60934, 'm/s' => 0.44704, 'mph' => 1 }
+  }.freeze
+
+  AREA_CONVERSIONS = {
+    'sq_m' => { 'sq_m' => 1, 'sq_km' => 0.000001, 'ha' => 0.0001, 'sq_ft' => 10.7639 },
+    'sq_km' => { 'sq_m' => 1_000_000, 'sq_km' => 1, 'ha' => 100, 'sq_mi' => 0.386102 },
+    'sq_ft' => { 'sq_m' => 0.092903, 'ha' => 0.0000092903, 'sq_km' => 0.000000092903, 'sq_ft' => 1 }
+  }.freeze
+
   def convert_length(value, from_unit, to_unit)
     (value.to_f * LENGTH_CONVERSIONS[from_unit][to_unit]).round(6)
   end
@@ -76,5 +100,41 @@ class Converter
     return 0 if from_conversion.nil? || to_conversion.nil?
 
     (value.to_f * from_conversion[to_unit]).round(15)
+  end
+
+  def convert_temperature(value, from_unit, to_unit)
+    from_conversion = TEMPERATURE_CONVERSIONS[from_unit]
+    to_conversion = TEMPERATURE_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_time(value, from_unit, to_unit)
+    from_conversion = TIME_CONVERSIONS[from_unit]
+    to_conversion = TIME_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_speed(value, from_unit, to_unit)
+    from_conversion = SPEED_CONVERSIONS[from_unit]
+    to_conversion = SPEED_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_area(value, from_unit, to_unit)
+    from_conversion = AREA_CONVERSIONS[from_unit]
+    to_conversion = AREA_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
   end
 end

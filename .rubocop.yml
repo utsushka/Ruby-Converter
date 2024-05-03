@@ -48,3 +48,6 @@ Style/WordArray:
 Layout/TrailingWhitespace:
   Enabled: true
   AllowInEmptyLines: true
+
+Metrics/ClassLength:
+  Max: 150
