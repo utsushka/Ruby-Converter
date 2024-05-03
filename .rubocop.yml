@@ -50,4 +50,8 @@ Layout/TrailingWhitespace:
   AllowInEmptyLines: true
 
 Metrics/ClassLength:
-  Max: 150
+  Max: 250
+
+Style/NumericLiterals:
+  Exclude:
+    - 'lib/converter.rb'

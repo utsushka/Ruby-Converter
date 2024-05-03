@@ -59,6 +59,31 @@ class Converter
     'day' => { 's' => 86_400, 'min' => 1440, 'hr' => 24, 'day' => 1 }
   }.freeze
 
+  VOLUME_NONLIQUID_CONVERSIONS = {
+    'cubic_m' => { 'cubic_m' => 1, 'liters' => 1000, 'cubic_ft' => 35.3147, 'cubic_in' => 61023.7 },
+    'liters' => { 'cubic_m' => 0.001, 'liters' => 1, 'gallons' => 0.264172, 'cubic_ft' => 0.0353147 },
+    'cubic_ft' => { 'cubic_m' => 0.0283168, 'liters' => 28.3168, 'cubic_ft' => 1, 'cubic_in' => 1728 },
+    'cubic_in' => { 'cubic_m' => 0.0000163871, 'liters' => 0.0163871, 'cubic_ft' => 0.000578704, 'cubic_in' => 1 }
+  }.freeze
+
+  FORCE_CONVERSIONS = {
+    'newton' => { 'newton' => 1, 'kilogram_force' => 0.101972, 'pound_force' => 0.224809 },
+    'kilogram_force' => { 'newton' => 9.80665, 'kilogram_force' => 1, 'pound_force' => 2.20462 },
+    'pound_force' => { 'newton' => 4.44822, 'kilogram_force' => 0.453592, 'pound_force' => 1 }
+  }.freeze
+
+  PRESSURE_CONVERSIONS = {
+    'pascal' => { 'pascal' => 1, 'atmosphere' => 0.00000986923, 'mmHg' => 0.00750062 },
+    'atmosphere' => { 'pascal' => 101325, 'atmosphere' => 1, 'mmHg' => 760 },
+    'mmHg' => { 'pascal' => 133.322, 'atmosphere' => 0.00131579, 'mmHg' => 1 }
+  }.freeze
+
+  ENERGY_CONVERSIONS = {
+    'joule' => { 'joule' => 1, 'kilocalorie' => 0.000239006, 'watt_hour' => 0.000277778 },
+    'kilocalorie' => { 'joule' => 4184, 'kilocalorie' => 1, 'watt_hour' => 1.16222 },
+    'watt_hour' => { 'joule' => 3600, 'kilocalorie' => 0.860421, 'watt_hour' => 1 }
+  }.freeze
+
   SPEED_CONVERSIONS = {
     'km/h' => { 'km/h' => 1, 'm/s' => 0.277778, 'mph' => 0.621371 },
     'm/s' => { 'km/h' => 3.6, 'm/s' => 1, 'mph' => 2.23694 },
@@ -132,6 +157,42 @@ class Converter
   def convert_area(value, from_unit, to_unit)
     from_conversion = AREA_CONVERSIONS[from_unit]
     to_conversion = AREA_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_volume_nonliquid(value, from_unit, to_unit)
+    from_conversion = VOLUME_NONLIQUID_CONVERSIONS[from_unit]
+    to_conversion = VOLUME_NONLIQUID_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_force(value, from_unit, to_unit)
+    from_conversion = FORCE_CONVERSIONS[from_unit]
+    to_conversion = FORCE_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_pressure(value, from_unit, to_unit)
+    from_conversion = PRESSURE_CONVERSIONS[from_unit]
+    to_conversion = PRESSURE_CONVERSIONS[to_unit]
+
+    return 0 if from_conversion.nil? || to_conversion.nil?
+
+    (value.to_f * from_conversion[to_unit]).round(6)
+  end
+
+  def convert_energy(value, from_unit, to_unit)
+    from_conversion = ENERGY_CONVERSIONS[from_unit]
+    to_conversion = ENERGY_CONVERSIONS[to_unit]
 
     return 0 if from_conversion.nil? || to_conversion.nil?
 
