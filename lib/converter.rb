@@ -48,16 +48,31 @@ class Converter
   def convert_length(value, from_unit, to_unit)
     (value.to_f * LENGTH_CONVERSIONS[from_unit][to_unit]).round(6)
   end
-
+  
   def convert_weight(value, from_unit, to_unit)
-    (value.to_f * WEIGHT_CONVERSIONS[from_unit][to_unit]).round(8)
+    from_conversion = WEIGHT_CONVERSIONS[from_unit]
+    to_conversion = WEIGHT_CONVERSIONS[to_unit]
+  
+    return 0 if from_conversion.nil? || to_conversion.nil?
+  
+    (value.to_f * from_conversion[to_unit]).round(8)
   end
-
+  
   def convert_volume(value, from_unit, to_unit)
-    (value.to_f * VOLUME_CONVERSIONS[from_unit][to_unit]).round(9)
+    from_conversion = VOLUME_CONVERSIONS[from_unit]
+    to_conversion = VOLUME_CONVERSIONS[to_unit]
+  
+    return 0 if from_conversion.nil? || to_conversion.nil?
+  
+    (value.to_f * from_conversion[to_unit]).round(10)
   end
-
+  
   def convert_kitchen_units(value, from_unit, to_unit)
-    (value.to_f * KITCHEN_UNITS_CONVERSIONS[from_unit][to_unit]).round(15)
+    from_conversion = KITCHEN_UNITS_CONVERSIONS[from_unit]
+    to_conversion = KITCHEN_UNITS_CONVERSIONS[to_unit]
+  
+    return 0 if from_conversion.nil? || to_conversion.nil?
+  
+    (value.to_f * from_conversion[to_unit]).round(15)
   end
 end
