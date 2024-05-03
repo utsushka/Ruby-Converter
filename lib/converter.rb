@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Converter
   LENGTH_CONVERSIONS = {
     'mm' => { 'mm' => 1, 'cm' => 0.1, 'm' => 0.001, 'km' => 0.000001, 'in' => 0.0393701, 'ft' => 0.00328084,
@@ -48,31 +50,31 @@ class Converter
   def convert_length(value, from_unit, to_unit)
     (value.to_f * LENGTH_CONVERSIONS[from_unit][to_unit]).round(6)
   end
-  
+
   def convert_weight(value, from_unit, to_unit)
     from_conversion = WEIGHT_CONVERSIONS[from_unit]
     to_conversion = WEIGHT_CONVERSIONS[to_unit]
-  
+
     return 0 if from_conversion.nil? || to_conversion.nil?
-  
+
     (value.to_f * from_conversion[to_unit]).round(8)
   end
-  
+
   def convert_volume(value, from_unit, to_unit)
     from_conversion = VOLUME_CONVERSIONS[from_unit]
     to_conversion = VOLUME_CONVERSIONS[to_unit]
-  
+
     return 0 if from_conversion.nil? || to_conversion.nil?
-  
+
     (value.to_f * from_conversion[to_unit]).round(10)
   end
-  
+
   def convert_kitchen_units(value, from_unit, to_unit)
     from_conversion = KITCHEN_UNITS_CONVERSIONS[from_unit]
     to_conversion = KITCHEN_UNITS_CONVERSIONS[to_unit]
-  
+
     return 0 if from_conversion.nil? || to_conversion.nil?
-  
+
     (value.to_f * from_conversion[to_unit]).round(15)
   end
 end
