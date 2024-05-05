@@ -9,7 +9,7 @@ module ForceConverter
     POUND_FORCE => { NEWTON => 4.44822, KILOGRAM_FORCE => 0.453592, POUND_FORCE => 1 }
   }.freeze
 
-  def convert_force(value, from_unit, to_unit)
+  def self.convert_force(value, from_unit, to_unit)
     (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
   end
 end

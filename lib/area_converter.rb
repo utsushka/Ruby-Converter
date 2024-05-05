@@ -10,7 +10,7 @@ module AreaConverter
     SQ_FT => { SQ_M => 0.092903, HA => 0.0000092903, SQ_KM => 0.000000092903, SQ_FT => 1 }
   }.freeze
 
-  def convert_area(value, from_unit, to_unit)
+  def self.convert_area(value, from_unit, to_unit)
     value.to_f * CONVERSIONS[from_unit][to_unit] / CONVERSIONS[to_unit][from_unit]
   end
 end
