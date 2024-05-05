@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EnergyConverter
   JOULE = :joule
   KILOCALORIE = :kilocalorie

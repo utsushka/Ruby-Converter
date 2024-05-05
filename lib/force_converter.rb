@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForceConverter
   NEWTON = :newton
   KILOGRAM_FORCE = :kilogram_force

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SpeedConverter
   KM_H = :km_h
   M_S = :m_s

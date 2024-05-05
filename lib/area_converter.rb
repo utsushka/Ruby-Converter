@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AreaConverter
   SQ_M = :sq_m
   SQ_KM = :sq_km

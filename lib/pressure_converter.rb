@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PressureConverter
   PASCAL = :pascal
   ATMOSPHERE = :atmosphere
@@ -5,7 +7,7 @@ module PressureConverter
 
   CONVERSIONS = {
     PASCAL => { PASCAL => 1, ATMOSPHERE => 0.00000986923, MMHG => 0.00750062 },
-    ATMOSPHERE => { PASCAL => 101325, ATMOSPHERE => 1, MMHG => 760 },
+    ATMOSPHERE => { PASCAL => 101_325, ATMOSPHERE => 1, MMHG => 760 },
     MMHG => { PASCAL => 133.322, ATMOSPHERE => 0.00131579, MMHG => 1 }
   }.freeze
 
