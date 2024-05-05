@@ -1,17 +1,26 @@
 # frozen_string_literal: true
 
 module VolumeConverter
+  ML = :ml
+  L = :l
+  FL_OZ = :fl_oz
+  CUP = :cup
+  PT = :pt
+  QT = :qt
+  GAL = :gal
+
   CONVERSIONS = {
-    ml: { ml: 1, l: 0.001, fl_oz: 0.033814, cup: 0.00422675, pt: 0.00211338, qt: 0.00105669, gal: 0.000264172 },
-    l: { ml: 1000, l: 1, fl_oz: 33.814, cup: 4.22675, pt: 2.11338, qt: 1.05669, gal: 0.264172 },
-    fl_oz: { ml: 29.5735, l: 0.0295735, fl_oz: 1, cup: 0.125, pt: 0.0625, qt: 0.03125, gal: 0.0078125 },
-    cup: { ml: 236.588, l: 0.236588, fl_oz: 8, cup: 1, pt: 0.5, qt: 0.25, gal: 0.0625 },
-    pt: { ml: 473.176, l: 0.473176, fl_oz: 16, cup: 2, pt: 1, qt: 0.5, gal: 0.125 },
-    qt: { ml: 946.353, l: 0.946353, fl_oz: 32, cup: 4, pt: 2, qt: 1, gal: 0.25 },
-    gal: { ml: 3785.41, l: 3.78541, fl_oz: 128, cup: 16, pt: 8, qt: 4, gal: 1 }
+    ML => { ML => 1, L => 0.001, FL_OZ => 0.033814, CUP => 0.00422675, PT => 0.00211338, QT => 0.00105669,
+            GAL => 0.000264172 },
+    L => { ML => 1000, L => 1, FL_OZ => 33.814, CUP => 4.22675, PT => 2.11338, QT => 1.05669, GAL => 0.264172 },
+    FL_OZ => { ML => 29.5735, L => 0.0295735, FL_OZ => 1, CUP => 0.125, PT => 0.0625, QT => 0.03125, GAL => 0.0078125 },
+    CUP => { ML => 236.588, L => 0.236588, FL_OZ => 8, CUP => 1, PT => 0.5, QT => 0.25, GAL => 0.0625 },
+    PT => { ML => 473.176, L => 0.473176, FL_OZ => 16, CUP => 2, PT => 1, QT => 0.5, GAL => 0.125 },
+    QT => { ML => 946.353, L => 0.946353, FL_OZ => 32, CUP => 4, PT => 2, QT => 1, GAL => 0.25 },
+    GAL => { ML => 3785.41, L => 3.78541, FL_OZ => 128, CUP => 16, PT => 8, QT => 4, GAL => 1 }
   }.freeze
 
   def convert_volume(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit.to_sym][to_unit.to_sym]).round(10)
+    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(10)
   end
 end
