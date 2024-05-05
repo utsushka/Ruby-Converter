@@ -25,3 +25,6 @@ jobs:
 
       - name: Run tests
         run: bundle _2.2.22_ exec rspec
+
+      - name: Run RuboCop
+        run: bundle _2.2.22_ exec rubocop
