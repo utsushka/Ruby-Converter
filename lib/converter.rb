@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Converter
   LENGTH_CONVERSIONS = {
     'mm' => { 'mm' => 1, 'cm' => 0.1, 'm' => 0.001, 'km' => 0.000001, 'in' => 0.0393701, 'ft' => 0.00328084,
