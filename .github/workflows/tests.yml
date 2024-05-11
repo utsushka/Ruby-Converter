@@ -56,17 +56,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+  
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
-
+  
       - name: Install dependencies
         run: |
           gem install bundler -v 2.2.22
           bundle _2.2.22_ install
-
+  
       - name: Run tests with SimpleCov
         run: |
           bundle _2.2.22_ exec rspec --format progress
@@ -76,7 +76,12 @@ jobs:
           if [ ! -d "coverage" ]; then
             mkdir coverage
           fi
-          mv ./coverage/.resultset.json ./coverage/resultset.json
+          # Проверяем существование файла .resultset.json перед перемещением
+          if [ -f "./coverage/.resultset.json" ]; then
+            mv ./coverage/.resultset.json ./coverage/resultset.json
+          else
+            echo "No .resultset.json found in coverage directory"
+          fi
         env:
           RAILS_ENV: test
           SIMPLECOV: true
