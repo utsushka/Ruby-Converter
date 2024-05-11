@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'converter'
 
 module VolumeConverter
   ML = :ml
@@ -21,6 +22,6 @@ module VolumeConverter
   }.freeze
 
   def convert_volume(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(10)
+    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
   end
 end

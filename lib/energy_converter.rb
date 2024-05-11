@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'converter'
 
 module EnergyConverter
   JOULE = :joule
@@ -12,6 +13,6 @@ module EnergyConverter
   }.freeze
 
   def self.convert_energy(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
+    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
   end
 end

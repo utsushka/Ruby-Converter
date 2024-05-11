@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'converter'
 
 module ForceConverter
   NEWTON = :newton
@@ -12,6 +13,6 @@ module ForceConverter
   }.freeze
 
   def self.convert_force(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
+    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
   end
 end
