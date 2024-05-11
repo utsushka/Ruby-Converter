@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative 'converter'
 
 module VolumeNonliquidConverter
   CUBIC_M = :cubic_m
@@ -15,6 +14,6 @@ module VolumeNonliquidConverter
   }.freeze
 
   def convert_volume_nonliquid(value, from_unit, to_unit)
-    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
+    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
   end
 end

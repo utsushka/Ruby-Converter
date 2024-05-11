@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative 'converter'
 
 module KitchenUnitsConverter
   TEA_SPOON = :tsp
@@ -12,7 +11,7 @@ module KitchenUnitsConverter
     CUP => { TEA_SPOON => 48, TABLE_SPOON => 16, CUP => 1 }
   }.freeze
 
-  def self.convert_kitchen_units(value, from_unit, to_unit)
-    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
+  def convert_kitchen_units(value, from_unit, to_unit)
+    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(15)
   end
 end

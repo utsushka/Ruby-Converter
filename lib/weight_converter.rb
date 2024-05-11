@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative 'converter'
 
 module WeightConverter
   MG = :mg
@@ -17,6 +16,6 @@ module WeightConverter
   }.freeze
 
   def convert_weight(value, from_unit, to_unit)
-    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
+    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(8)
   end
 end

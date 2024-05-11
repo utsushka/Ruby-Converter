@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative 'converter'
 
 module TimeConverter
   S = :s
@@ -15,6 +14,6 @@ module TimeConverter
   }.freeze
 
   def convert_time(value, from_unit, to_unit)
-    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
+    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
   end
 end

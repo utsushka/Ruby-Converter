@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative 'converter'
 
 module AreaConverter
   SQ_M = :sq_m
@@ -14,6 +13,6 @@ module AreaConverter
   }.freeze
 
   def self.convert_area(value, from_unit, to_unit)
-    Converter.convert(value, from_unit, to_unit, CONVERSIONS)
+    value.to_f * CONVERSIONS[from_unit][to_unit] / CONVERSIONS[to_unit][from_unit]
   end
 end
