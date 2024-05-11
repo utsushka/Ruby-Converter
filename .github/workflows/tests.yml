@@ -2,11 +2,13 @@ name: Run Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +28,55 @@ jobs:
       - name: Run tests
         run: bundle _2.2.22_ exec rspec
 
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler -v 2.2.22
+          bundle _2.2.22_ install
+
       - name: Run RuboCop
         run: bundle _2.2.22_ exec rubocop
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler -v 2.2.22
+          bundle _2.2.22_ install
+
+      - name: Run tests with SimpleCov
+        run: |
+          bundle _2.2.22_ exec rspec --format progress
+          echo "Running SimpleCov"
+          bundle _2.2.22_ exec rspec
+          echo "Collecting SimpleCov report"
+          if [ ! -d "coverage" ]; then
+            mkdir coverage
+          fi
+          mv ./coverage/.resultset.json ./coverage/resultset.json
+        env:
+          RAILS_ENV: test
+          SIMPLECOV: true
