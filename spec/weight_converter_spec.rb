@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/weight_converter'
+require_relative '../lib/ruby_converter/weight_converter'
 require 'rspec'
 
 RSpec.describe "WeightConverter" do

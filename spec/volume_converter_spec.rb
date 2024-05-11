@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/volume_converter'
+require_relative '../lib/ruby_converter/volume_converter'
 require 'rspec'
 
 RSpec.describe "VolumeConverter" do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/force_converter'
+require_relative '../lib/ruby_converter/force_converter'
 require 'rspec'
 
 RSpec.describe "Force conversion" do

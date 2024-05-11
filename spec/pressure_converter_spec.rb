@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/pressure_converter'
+require_relative '../lib/ruby_converter/pressure_converter'
 require 'rspec'
 
 RSpec.describe "PressureConverter" do

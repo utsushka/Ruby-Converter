@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/length_converter'
+require_relative '../lib/ruby_converter/length_converter'
 require 'rspec'
 
 RSpec.describe "LengthConverter" do

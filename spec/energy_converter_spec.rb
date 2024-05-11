@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/energy_converter'
+require_relative '../lib/ruby_converter/energy_converter'
 require 'rspec'
 
 RSpec.describe "Energy conversion" do

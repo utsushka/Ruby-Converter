@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/area_converter'
+require_relative '../lib/ruby_converter/area_converter'
 require 'rspec'
 
 RSpec.describe "Area conversion" do

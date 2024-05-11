@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/time_converter'
+require_relative '../lib/ruby_converter/time_converter'
 require 'rspec'
 
 RSpec.describe "TimeConverter" do

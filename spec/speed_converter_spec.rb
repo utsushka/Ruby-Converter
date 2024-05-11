@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/speed_converter'
+require_relative '../lib/ruby_converter/speed_converter'
 require 'rspec'
 
 RSpec.describe "SpeedConverter" do
