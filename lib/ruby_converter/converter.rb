@@ -1,5 +1,6 @@
-class Converter
+# frozen_string_literal: true
 
+class Converter
   def self.convert(value, from, to, conversions, round = 2)
     conversion_key = "#{from}_to_#{to}"
     conversion_proc = conversions[conversion_key]
@@ -8,7 +9,7 @@ class Converter
       result = conversion_proc.call(value)
       result.round(round)
     else
-      nil  # Могли заменить на `raise ArgumentError, "Unsupported conversion from #{from} to #{to}"` для выброса исключения, но решили сделать через nil
+      nil # Решили сделать через nil
     end
   end
 end

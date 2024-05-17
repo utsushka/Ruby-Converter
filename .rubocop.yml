@@ -51,7 +51,7 @@ Layout/TrailingWhitespace:
 
 Metrics/ClassLength:
   Max: 250
-
-Style/NumericLiterals:
+    
+Style/EmptyElse:
   Exclude:
-    - 'lib/converter.rb'
+    - 'lib/ruby_converter/converter.rb'
