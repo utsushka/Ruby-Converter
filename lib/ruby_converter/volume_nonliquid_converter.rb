@@ -1,19 +1,36 @@
 # frozen_string_literal: true
 
+require_relative 'converter'
+
 module VolumeNonliquidConverter
-  CUBIC_M = :cubic_m
-  LITERS = :liters
-  CUBIC_FT = :cubic_ft
-  CUBIC_IN = :cubic_in
+  CUBIC_M = 'cubic_m'
+  LITERS = 'liters'
+  CUBIC_FT = 'cubic_ft'
+  CUBIC_IN = 'cubic_in'
 
   CONVERSIONS = {
-    CUBIC_M => { CUBIC_M => 1, LITERS => 1000, CUBIC_FT => 35.3147, CUBIC_IN => 61_023.7 },
-    LITERS => { CUBIC_M => 0.001, LITERS => 1, CUBIC_FT => 0.0353147, CUBIC_IN => 61.0237 },
-    CUBIC_FT => { CUBIC_M => 0.0283168, LITERS => 28.3168, CUBIC_FT => 1, CUBIC_IN => 1728 },
-    CUBIC_IN => { CUBIC_M => 0.0000163871, LITERS => 0.0163871, CUBIC_FT => 0.000578704, CUBIC_IN => 1 }
+    "#{CUBIC_M}_to_#{CUBIC_M}" => ->(value) { value * 1 },
+    "#{CUBIC_M}_to_#{LITERS}" => ->(value) { value * 1000 },
+    "#{CUBIC_M}_to_#{CUBIC_FT}" => ->(value) { value * 35.3147 },
+    "#{CUBIC_M}_to_#{CUBIC_IN}" => ->(value) { value * 61_023.7 },
+
+    "#{LITERS}_to_#{CUBIC_M}" => ->(value) { value * 0.001 },
+    "#{LITERS}_to_#{LITERS}" => ->(value) { value * 1 },
+    "#{LITERS}_to_#{CUBIC_FT}" => ->(value) { value * 0.0353147 },
+    "#{LITERS}_to_#{CUBIC_IN}" => ->(value) { value * 61.0237 },
+
+    "#{CUBIC_FT}_to_#{CUBIC_M}" => ->(value) { value * 0.0283168 },
+    "#{CUBIC_FT}_to_#{LITERS}" => ->(value) { value * 28.3168 },
+    "#{CUBIC_FT}_to_#{CUBIC_FT}" => ->(value) { value * 1 },
+    "#{CUBIC_FT}_to_#{CUBIC_IN}" => ->(value) { value * 1728 },
+
+    "#{CUBIC_IN}_to_#{CUBIC_M}" => ->(value) { value * 0.0000163871 },
+    "#{CUBIC_IN}_to_#{LITERS}" => ->(value) { value * 0.0163871 },
+    "#{CUBIC_IN}_to_#{CUBIC_FT}" => ->(value) { value * 0.000578704 },
+    "#{CUBIC_IN}_to_#{CUBIC_IN}" => ->(value) { value * 1 }
   }.freeze
 
-  def convert_volume_nonliquid(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
+  def self.convert_volume_nonliquid(value, from_unit, to_unit)
+    Converter.convert(value, from_unit.to_s, to_unit.to_s, CONVERSIONS, 6)
   end
 end

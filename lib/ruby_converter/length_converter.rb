@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'converter'
+
 module LengthConverter
   MM = :mm
   CM = :cm
@@ -11,23 +13,80 @@ module LengthConverter
   MI = :mi
 
   CONVERSIONS = {
-    MM => { MM => 1, CM => 0.1, M => 0.001, KM => 0.000001, IN => 0.0393701, FT => 0.00328084, YD => 0.00109361,
-            MI => 0.000000621371 },
-    CM => { MM => 10, CM => 1, M => 0.01, KM => 0.00001, IN => 0.393701, FT => 0.0328084, YD => 0.0109361,
-            MI => 0.00000621371 },
-    M => { MM => 1000, CM => 100, M => 1, KM => 0.001, IN => 39.3701, FT => 3.28084, YD => 1.09361, MI => 0.000621371 },
-    KM => { MM => 1_000_000, CM => 100_000, M => 1000, KM => 1, IN => 39_370.1, FT => 3280.84, YD => 1093.61,
-            MI => 0.621371 },
-    IN => { MM => 25.4, CM => 2.54, M => 0.0254, KM => 0.0000254, IN => 1, FT => 0.0833333, YD => 0.0277778,
-            MI => 0.0000157828 },
-    FT => { MM => 304.8, CM => 30.48, M => 0.3048, KM => 0.0003048, IN => 12, FT => 1, YD => 0.333333,
-            MI => 0.000189394 },
-    YD => { MM => 914.4, CM => 91.44, M => 0.9144, KM => 0.0009144, IN => 36, FT => 3, YD => 1, MI => 0.000568182 },
-    MI => { MM => 1_609_344, CM => 160_934.4, M => 1609.344, KM => 1.60934, IN => 63_360, FT => 5280, YD => 1760,
-            MI => 1 }
+    'mm_to_mm' => ->(value) { value * 1 },
+    'mm_to_cm' => ->(value) { value * 0.1 },
+    'mm_to_m' => ->(value) { value * 0.001 },
+    'mm_to_km' => ->(value) { value * 0.000001 },
+    'mm_to_in' => ->(value) { value * 0.0393701 },
+    'mm_to_ft' => ->(value) { value * 0.00328084 },
+    'mm_to_yd' => ->(value) { value * 0.00109361 },
+    'mm_to_mi' => ->(value) { value * 0.000000621371 },
+
+    'cm_to_mm' => ->(value) { value * 10 },
+    'cm_to_cm' => ->(value) { value * 1 },
+    'cm_to_m' => ->(value) { value * 0.01 },
+    'cm_to_km' => ->(value) { value * 0.00001 },
+    'cm_to_in' => ->(value) { value * 0.393701 },
+    'cm_to_ft' => ->(value) { value * 0.0328084 },
+    'cm_to_yd' => ->(value) { value * 0.0109361 },
+    'cm_to_mi' => ->(value) { value * 0.00000621371 },
+
+    'm_to_mm' => ->(value) { value * 1000 },
+    'm_to_cm' => ->(value) { value * 100 },
+    'm_to_m' => ->(value) { value * 1 },
+    'm_to_km' => ->(value) { value * 0.001 },
+    'm_to_in' => ->(value) { value * 39.3701 },
+    'm_to_ft' => ->(value) { value * 3.28084 },
+    'm_to_yd' => ->(value) { value * 1.09361 },
+    'm_to_mi' => ->(value) { value * 0.000621371 },
+
+    'km_to_mm' => ->(value) { value * 1_000_000 },
+    'km_to_cm' => ->(value) { value * 100_000 },
+    'km_to_m' => ->(value) { value * 1000 },
+    'km_to_km' => ->(value) { value * 1 },
+    'km_to_in' => ->(value) { value * 39_370.1 },
+    'km_to_ft' => ->(value) { value * 3280.84 },
+    'km_to_yd' => ->(value) { value * 1093.61 },
+    'km_to_mi' => ->(value) { value * 0.621371 },
+
+    'in_to_mm' => ->(value) { value * 25.4 },
+    'in_to_cm' => ->(value) { value * 2.54 },
+    'in_to_m' => ->(value) { value * 0.0254 },
+    'in_to_km' => ->(value) { value * 0.0000254 },
+    'in_to_in' => ->(value) { value * 1 },
+    'in_to_ft' => ->(value) { value * 0.0833333 },
+    'in_to_yd' => ->(value) { value * 0.0277778 },
+    'in_to_mi' => ->(value) { value * 0.0000157828 },
+
+    'ft_to_mm' => ->(value) { value * 304.8 },
+    'ft_to_cm' => ->(value) { value * 30.48 },
+    'ft_to_m' => ->(value) { value * 0.3048 },
+    'ft_to_km' => ->(value) { value * 0.0003048 },
+    'ft_to_in' => ->(value) { value * 12 },
+    'ft_to_ft' => ->(value) { value * 1 },
+    'ft_to_yd' => ->(value) { value * 0.333333 },
+    'ft_to_mi' => ->(value) { value * 0.000189394 },
+
+    'yd_to_mm' => ->(value) { value * 914.4 },
+    'yd_to_cm' => ->(value) { value * 91.44 },
+    'yd_to_m' => ->(value) { value * 0.9144 },
+    'yd_to_km' => ->(value) { value * 0.0009144 },
+    'yd_to_in' => ->(value) { value * 36 },
+    'yd_to_ft' => ->(value) { value * 3 },
+    'yd_to_yd' => ->(value) { value * 1 },
+    'yd_to_mi' => ->(value) { value * 0.000568182 },
+
+    'mi_to_mm' => ->(value) { value * 1_609_344 },
+    'mi_to_cm' => ->(value) { value * 160_934.4 },
+    'mi_to_m' => ->(value) { value * 1609.344 },
+    'mi_to_km' => ->(value) { value * 1.60934 },
+    'mi_to_in' => ->(value) { value * 63_360 },
+    'mi_to_ft' => ->(value) { value * 5280 },
+    'mi_to_yd' => ->(value) { value * 1760 },
+    'mi_to_mi' => ->(value) { value * 1 }
   }.freeze
 
-  def convert_length(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
+  def self.convert_length(value, from_unit, to_unit)
+    Converter.convert(value, from_unit.to_s, to_unit.to_s, CONVERSIONS)
   end
 end

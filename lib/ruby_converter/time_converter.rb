@@ -7,13 +7,28 @@ module TimeConverter
   DAY = :day
 
   CONVERSIONS = {
-    S => { S => 1, MIN => 0.0166667, HR => 0.000277778, DAY => 0.0000115741 },
-    MIN => { S => 60, MIN => 1, HR => 0.0166667, DAY => 0.000694444 },
-    HR => { S => 3600, MIN => 60, HR => 1, DAY => 0.0416667 },
-    DAY => { S => 86_400, MIN => 1440, HR => 24, DAY => 1 }
+    's_to_s' => ->(value) { value * 1 },
+    's_to_min' => ->(value) { value * 0.0166667 },
+    's_to_hr' => ->(value) { value * 0.000277778 },
+    's_to_day' => ->(value) { value * 0.0000115741 },
+
+    'min_to_s' => ->(value) { value * 60 },
+    'min_to_min' => ->(value) { value * 1 },
+    'min_to_hr' => ->(value) { value * 0.0166667 },
+    'min_to_day' => ->(value) { value * 0.000694444 },
+
+    'hr_to_s' => ->(value) { value * 3600 },
+    'hr_to_min' => ->(value) { value * 60 },
+    'hr_to_hr' => ->(value) { value * 1 },
+    'hr_to_day' => ->(value) { value * 0.0416667 },
+
+    'day_to_s' => ->(value) { value * 86_400 },
+    'day_to_min' => ->(value) { value * 1440 },
+    'day_to_hr' => ->(value) { value * 24 },
+    'day_to_day' => ->(value) { value * 1 }
   }.freeze
 
-  def convert_time(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(6)
+  def self.convert_time(value, from_unit, to_unit)
+    Converter.convert(value, from_unit.to_s, to_unit.to_s, CONVERSIONS)
   end
 end

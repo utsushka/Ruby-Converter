@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'converter'
+
 module WeightConverter
   MG = :mg
   G = :g
@@ -8,14 +10,38 @@ module WeightConverter
   LB = :lb
 
   CONVERSIONS = {
-    MG => { MG => 1, G => 0.001, KG => 0.000001, OZ => 0.000035274, LB => 0.00000220462 },
-    G => { MG => 1000, G => 1, KG => 0.001, OZ => 0.035274, LB => 0.00220462 },
-    KG => { MG => 1_000_000, G => 1000, KG => 1, OZ => 35.274, LB => 2.20462 },
-    OZ => { MG => 28_349.5, G => 28.3495, KG => 0.0283495, OZ => 1, LB => 0.0625 },
-    LB => { MG => 453_592, G => 453.592, KG => 0.453592, OZ => 16, LB => 1 }
+    "#{MG}_to_#{MG}" => ->(value) { value * 1 },
+    "#{MG}_to_#{G}" => ->(value) { value * 0.001 },
+    "#{MG}_to_#{KG}" => ->(value) { value * 0.000001 },
+    "#{MG}_to_#{OZ}" => ->(value) { value * 0.000035274 },
+    "#{MG}_to_#{LB}" => ->(value) { value * 0.00000220462 },
+
+    "#{G}_to_#{MG}" => ->(value) { value * 1000 },
+    "#{G}_to_#{G}" => ->(value) { value * 1 },
+    "#{G}_to_#{KG}" => ->(value) { value * 0.001 },
+    "#{G}_to_#{OZ}" => ->(value) { value * 0.035274 },
+    "#{G}_to_#{LB}" => ->(value) { value * 0.00220462 },
+
+    "#{KG}_to_#{MG}" => ->(value) { value * 1_000_000 },
+    "#{KG}_to_#{G}" => ->(value) { value * 1000 },
+    "#{KG}_to_#{KG}" => ->(value) { value * 1 },
+    "#{KG}_to_#{OZ}" => ->(value) { value * 35.274 },
+    "#{KG}_to_#{LB}" => ->(value) { value * 2.20462 },
+
+    "#{OZ}_to_#{MG}" => ->(value) { value * 28_349.5 },
+    "#{OZ}_to_#{G}" => ->(value) { value * 28.3495 },
+    "#{OZ}_to_#{KG}" => ->(value) { value * 0.0283495 },
+    "#{OZ}_to_#{OZ}" => ->(value) { value * 1 },
+    "#{OZ}_to_#{LB}" => ->(value) { value * 0.0625 },
+
+    "#{LB}_to_#{MG}" => ->(value) { value * 453_592 },
+    "#{LB}_to_#{G}" => ->(value) { value * 453.592 },
+    "#{LB}_to_#{KG}" => ->(value) { value * 0.453592 },
+    "#{LB}_to_#{OZ}" => ->(value) { value * 16 },
+    "#{LB}_to_#{LB}" => ->(value) { value * 1 }
   }.freeze
 
-  def convert_weight(value, from_unit, to_unit)
-    (value.to_f * CONVERSIONS[from_unit][to_unit]).round(8)
+  def self.convert_weight(value, from_unit, to_unit)
+    Converter.convert(value, from_unit.to_s, to_unit.to_s, CONVERSIONS, 8)
   end
 end

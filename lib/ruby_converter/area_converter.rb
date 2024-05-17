@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'converter'
+
 module AreaConverter
   SQ_M = :sq_m
   SQ_KM = :sq_km
@@ -7,12 +9,23 @@ module AreaConverter
   SQ_FT = :sq_ft
 
   CONVERSIONS = {
-    SQ_M => { SQ_M => 1, SQ_KM => 0.000001, HA => 0.0001, SQ_FT => 10.7639 },
-    SQ_KM => { SQ_M => 1_000_000, SQ_KM => 1, HA => 100, SQ_FT => 0.000000092903 },
-    SQ_FT => { SQ_M => 0.092903, HA => 0.0000092903, SQ_KM => 0.000000092903, SQ_FT => 1 }
+    'sq_m_to_sq_m' => ->(value) { value * 1 },
+    'sq_m_to_sq_km' => ->(value) { value * 0.000001 },
+    'sq_m_to_ha' => ->(value) { value * 0.0001 },
+    'sq_m_to_sq_ft' => ->(value) { value * 10.7639 },
+
+    'sq_km_to_sq_m' => ->(value) { value * 1_000_000 },
+    'sq_km_to_sq_km' => ->(value) { value * 1 },
+    'sq_km_to_ha' => ->(value) { value * 100 },
+    'sq_km_to_sq_ft' => ->(value) { value * 10_763_910 },
+
+    'sq_ft_to_sq_m' => ->(value) { value * 0.092903 },
+    'sq_ft_to_ha' => ->(value) { value * 0.0000092903 },
+    'sq_ft_to_sq_km' => ->(value) { value * 0.000000092903 },
+    'sq_ft_to_sq_ft' => ->(value) { value * 1 }
   }.freeze
 
-  def self.convert_area(value, from_unit, to_unit)
-    value.to_f * CONVERSIONS[from_unit][to_unit] / CONVERSIONS[to_unit][from_unit]
+  def self.convert_area(value, from_unit, to_unit, round = 2)
+    Converter.convert(value, from_unit.to_s, to_unit.to_s, CONVERSIONS, round)
   end
 end
