@@ -23,6 +23,11 @@ module AreaConverter
     'sq_ft_to_ha' => ->(value) { value * 0.0000092903 },
     'sq_ft_to_sq_km' => ->(value) { value * 0.000000092903 },
     'sq_ft_to_sq_ft' => ->(value) { value * 1 }
+
+    'ha_to_sq_m' => ->(value) { value * 10000 },
+    'ha_to_sq_km' => ->(value) { value * 0.01 },
+    'ha_to_ha' => ->(value) { value * 1 },
+    'ha_to_sq_ft' => ->(value) { value * 107639.1 }
   }.freeze
 
   def self.convert_area(value, from_unit, to_unit, round = 2)
